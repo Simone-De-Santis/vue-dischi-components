@@ -1,64 +1,41 @@
 <template>
   <div class="container mt-5">
     <div class="row row-cols-1 row-cols-md-5 g-4">
-      <div class="col">
+      <div v-for="music in collectionMusic" :key="music.author" class="col">
         <div class="card">
-          <img src="" class="card-img-top" alt="..." />
+          <img :src="music.poster" class="card-img-top" :alt="music.author" />
           <div class="card-body text-center">
-            <h5 class="card-title">Card title</h5>
+            <h5 class="card-title">{{ music.title }}</h5>
             <p class="card-text">
-              This is a longer card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
+              {{ music.author }}
+            </p>
+            <p class="card-text">
+              {{ music.year }}
             </p>
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="card">
-          <img src="" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              This is a longer card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
-          </div>
-        </div>
-      </div>
-      <!-- <div class="col">
-        <div class="card">
-          <img src="" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              This is a longer card with supporting text below as a natural
-              lead-in to additional content.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              This is a longer card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
-          </div>
-        </div> 
-      </div>-->
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Main",
+  data() {
+    return {
+      collectionMusic: [],
+    };
+  },
+  created() {
+    axios
+      .get("https://flynn.boolean.careers/exercises/api/array/music")
+      .then((res) => {
+        this.collectionMusic = res.data.response;
+        console.log(this.collectionMusic[0].author);
+      });
+  },
 };
 </script>
 
