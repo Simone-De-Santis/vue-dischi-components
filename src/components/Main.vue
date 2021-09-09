@@ -1,28 +1,27 @@
 <template>
   <div class="container mt-5">
     <div class="row row-cols-1 row-cols-md-5 g-4">
-      <div v-for="music in collectionMusic" :key="music.author" class="col">
-        <div class="card">
-          <img :src="music.poster" class="card-img-top" :alt="music.author" />
-          <div class="card-body text-center">
-            <h5 class="card-title">{{ music.title }}</h5>
-            <p class="card-text">
-              {{ music.author }}
-            </p>
-            <p class="card-text">
-              {{ music.year }}
-            </p>
-          </div>
-        </div>
-      </div>
+      <Card
+        v-for="(music, index) in collectionMusic"
+        :key="index"
+        class="col"
+        :poster="music.poster"
+        :author="music.author"
+        :title="music.title"
+        :year="music.year"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Card from "./Card.vue";
 export default {
   name: "Main",
+  components: {
+    Card,
+  },
   data() {
     return {
       collectionMusic: [],
@@ -33,7 +32,7 @@ export default {
       .get("https://flynn.boolean.careers/exercises/api/array/music")
       .then((res) => {
         this.collectionMusic = res.data.response;
-        console.log(this.collectionMusic[0].author);
+        console.log(this.collectionMusic);
       });
   },
 };
